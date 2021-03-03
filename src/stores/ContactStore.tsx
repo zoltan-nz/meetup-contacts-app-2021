@@ -9,6 +9,7 @@ const contacts: Contact[] = [
 interface ContactStore {
   findAll: () => Contact[];
   findRecord: (id: string) => Contact | undefined;
+  addRecord: (contact: Contact) => number;
   isEmpty: boolean;
 }
 
@@ -27,9 +28,12 @@ export const useContactStore = () => {
 export const ContactStoreProvider: FC = ({ children }) => {
   const findAll = () => contacts;
   const findRecord = (id: string) => contacts.find(c => c.id === id);
+  const addRecord = (contact: Contact) => contacts.push(contact);
   const isEmpty = contacts.length === 0;
 
   return (
-    <ContactStoreContext.Provider value={{ findAll, findRecord, isEmpty }}>{children}</ContactStoreContext.Provider>
+    <ContactStoreContext.Provider value={{ findAll, findRecord, addRecord, isEmpty }}>
+      {children}
+    </ContactStoreContext.Provider>
   );
 };
