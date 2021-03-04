@@ -1,9 +1,10 @@
 import { createContext, FC, useContext } from 'react';
+import { v4 } from 'uuid';
 import { Contact } from '../models/contact';
 
 const contacts: Contact[] = [
-  { id: '1', name: 'John Smith', phone: '1234-1234-1234', address: { city: 'Wellington', zip: 2016 } },
-  { id: '2', name: 'Paul Taylor', phone: '2345-3456' },
+  { id: v4(), name: 'John Smith', phone: '1234-1234-1234', address: { city: 'Wellington', zip: 2016 } },
+  { id: v4(), name: 'Paul Taylor', phone: '2345-3456' },
 ];
 
 interface ContactStore {
