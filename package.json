@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.1",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
+    "@material-ui/core": "^5.0.0-alpha.27",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^13.0.1",
