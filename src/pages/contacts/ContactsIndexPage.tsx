@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useContactStore } from '../../stores/ContactStore';
@@ -18,6 +19,7 @@ export const ContactsIndexPage: FC = () => {
           ))}
         </ul>
       )}
+      <Button>Hello World</Button>
     </>
   );
 };
