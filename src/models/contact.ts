@@ -9,3 +9,7 @@ export interface Contact {
   phone: string;
   address?: Address;
 }
+
+export interface ContactResponse {
+  contacts: Contact[];
+}
