@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { createContext, FC, useContext } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { Contact, ContactResponse } from '../models/contact';
 
 // const contacts: Contact[] = [
@@ -11,11 +11,14 @@ import { Contact, ContactResponse } from '../models/contact';
 interface ContactStore {
   findAll: () => Contact[] | undefined;
   findRecord: (id: string) => Contact | undefined;
-  addRecord: (contact: Contact) => void;
+  addRecord: (contact: Contact) => Promise<AxiosResponse<Contact>>;
   isEmpty: boolean;
   isLoading: boolean;
   isFetched: boolean;
   error?: unknown;
+  isAddRecordLoading: boolean;
+  isAddRecordError: boolean;
+  isAddRecordSuccess: boolean;
 }
 
 const ContactStoreContext = createContext<ContactStore | undefined>(undefined);
@@ -35,14 +38,35 @@ export const ContactStoreProvider: FC = ({ children }) => {
     axios.get<ContactResponse>('/api/contacts')
   );
 
+  const {
+    mutateAsync,
+    isLoading: isAddRecordLoading,
+    isError: isAddRecordError,
+    isSuccess: isAddRecordSuccess,
+  } = useMutation((contact: Contact) => axios.post('/api/contacts', { contact }));
+
   const contacts = response?.data.contacts;
   const findAll = () => response?.data.contacts;
   const findRecord = (id: string) => contacts?.find(c => c.id === id);
-  const addRecord = (contact: Contact) => {};
+  const addRecord = (contact: Contact) => mutateAsync(contact);
+
   const isEmpty = contacts?.length === 0;
 
   return (
-    <ContactStoreContext.Provider value={{ findAll, findRecord, addRecord, isEmpty, isLoading, isFetched, error }}>
+    <ContactStoreContext.Provider
+      value={{
+        findAll,
+        findRecord,
+        addRecord,
+        isEmpty,
+        isLoading,
+        isFetched,
+        error,
+        isAddRecordError,
+        isAddRecordLoading,
+        isAddRecordSuccess,
+      }}
+    >
       {children}
     </ContactStoreContext.Provider>
   );

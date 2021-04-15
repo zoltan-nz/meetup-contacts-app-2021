@@ -5,28 +5,35 @@ import { Contact } from '../../models/contact';
 import { useContactStore } from '../../stores/ContactStore';
 
 export const NewContactPage: FC = () => {
-  const [newContact, setNewContact] = useState<Contact>({ id: v4(), name: '', phone: '' });
-  const { addRecord } = useContactStore();
+  const [newContact, setNewContact] = useState<Contact>({ id: v4(), fullName: '', phone: '' });
+  const { addRecord, isAddRecordLoading } = useContactStore();
   const navigate = useNavigate();
 
-  const onSubmit: FormEventHandler = (event: FormEvent) => {
+  const onSubmit: FormEventHandler = async (event: FormEvent) => {
     event.preventDefault();
 
-    addRecord(newContact);
+    addRecord(newContact).then(response => console.log(response));
     navigate('../');
   };
+
+  // useEffect(() => {
+  //     if (isAddRecordSuccess) {
+  //       navigate('../');
+  //     }
+  //   }, [isAddRecordSuccess, navigate]);
 
   return (
     <form onSubmit={onSubmit}>
       <label>
         Name:
-        <input type="text" onBlur={event => setNewContact({ ...newContact, name: event.target.value })} />
+        <input type="text" onBlur={event => setNewContact({ ...newContact, fullName: event.target.value })} />
       </label>
       <label>
         Phone:
         <input type="text" onBlur={event => setNewContact({ ...newContact, phone: event.target.value })} />
       </label>
       <button type="submit">Add</button>
+      {isAddRecordLoading && <div>Saving...</div>}
     </form>
   );
 };

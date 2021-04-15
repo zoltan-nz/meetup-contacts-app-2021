@@ -14,7 +14,7 @@ export const ContactsIndexPage: FC = () => {
         <ul>
           {findAll()?.map(contact => (
             <li key={contact.id}>
-              <Link to={contact.id}>{contact.name}</Link>
+              <Link to={contact.id}>{contact.fullName}</Link>
             </li>
           ))}
         </ul>

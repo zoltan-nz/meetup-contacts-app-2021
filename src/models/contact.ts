@@ -5,11 +5,15 @@ export interface Address {
 
 export interface Contact {
   id: string;
-  name: string;
+  fullName: string;
   phone: string;
   address?: Address;
 }
 
 export interface ContactResponse {
   contacts: Contact[];
+}
+
+export interface ContactPostRequest {
+  contact: Contact;
 }

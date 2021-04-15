@@ -1,18 +1,46 @@
-import { AppBar, Link, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Container, Link, Toolbar, Typography, useTheme } from '@material-ui/core';
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
-export const NavigationBar: FC = () => (
-  <AppBar>
-    <Toolbar>
-      <Typography variant="h6">Contacts App</Typography>
-      <nav>
-        <Link variant="button" color="textPrimary" component={NavLink} to="/">
-          Home
-        </Link>
-        <Link variant="button">Contacts</Link>
-      </nav>
-      <NavLink to="/">Home</NavLink> | <NavLink to="/contacts">Contacts</NavLink>
-    </Toolbar>
-  </AppBar>
-);
+export const NavigationBar: FC = () => {
+  const theme = useTheme();
+
+  return (
+    <AppBar position="static" color="default" elevation={3}>
+      <Container>
+        <Toolbar sx={{ flexWrap: 'wrap' }}>
+          <Typography
+            component={NavLink}
+            to="/"
+            variant="h6"
+            color="inherit"
+            noWrap
+            sx={{ flexGrow: 1, textDecoration: 'none' }}
+          >
+            Contacts App
+          </Typography>
+          <nav style={{ flexGrow: 1 }}>
+            <Link
+              variant="button"
+              color="textPrimary"
+              component={NavLink}
+              to="/"
+              sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
+            >
+              Home
+            </Link>
+            <Link
+              variant="button"
+              color="textPrimary"
+              component={NavLink}
+              to="/contacts"
+              sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
+            >
+              Contacts
+            </Link>
+          </nav>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};

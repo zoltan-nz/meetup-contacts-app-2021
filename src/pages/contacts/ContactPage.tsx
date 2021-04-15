@@ -10,7 +10,7 @@ export const ContactPage: FC = () => {
 
   return contact ? (
     <>
-      <h2>{contact?.name}</h2>
+      <h2>{contact?.fullName}</h2>
       <ul>
         <li>Phone: {contact?.phone}</li>
         <li>
