@@ -1,0 +1,6 @@
+coverage
+build
+dist
+yarn.lock
+.cache
+public/mockServiceWorker.js
