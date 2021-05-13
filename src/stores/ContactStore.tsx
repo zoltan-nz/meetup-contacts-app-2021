@@ -34,9 +34,12 @@ export const useContactStore = () => {
 };
 
 export const ContactStoreProvider: FC = ({ children }) => {
-  const { data: response, error, isLoading, isFetched } = useQuery('contacts', () =>
-    axios.get<ContactResponse>('/api/contacts')
-  );
+  const {
+    data: response,
+    error,
+    isLoading,
+    isFetched,
+  } = useQuery('contacts', () => axios.get<ContactResponse>('/api/contacts'));
 
   const {
     mutateAsync,
