@@ -7,7 +7,7 @@ export const ContactsIndexPage: FC = () => {
 
   return (
     <>
-      <h2>Contacts List using Store</h2>
+      <h2>Contacts List</h2>
       {isLoading && <p>Loading...</p>}
       {isFetched && isEmpty && <p>No Contacts Found</p>}
       {isFetched && !isEmpty && (
