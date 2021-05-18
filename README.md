@@ -14,6 +14,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+#### Craco
+If you haven't previously used [craco (Create React App Configuration Override)](https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md) you will get an error when using `yarn start`. Visit the [craco installation page](https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md#installation) for directions. You can ignore the part of the installation instructions regarding `craco.config.js` and `package.json` as that's already been done in this repository.
+
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
