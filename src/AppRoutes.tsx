@@ -1,6 +1,6 @@
 import { useRoutes } from 'react-router-dom';
 import { AppIndexPage } from './pages/AppIndexPage';
-import { AppLayout } from './pages/AppLayout';
+import { AppLayoutPage } from './pages/AppLayoutPage';
 import { ContactPage } from './pages/contacts/ContactPage';
 import { ContactsIndexPage } from './pages/contacts/ContactsIndexPage';
 import { NewContactPage } from './pages/contacts/NewContactPage';
@@ -11,7 +11,7 @@ export const AppRoutes = () =>
   useRoutes([
     {
       path: '/',
-      element: <AppLayout />,
+      element: <AppLayoutPage />,
       children: [
         { path: '/', element: <AppIndexPage /> },
         {

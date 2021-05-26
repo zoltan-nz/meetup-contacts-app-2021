@@ -1,25 +1,17 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { ContactList } from '../../components/ContactList';
 import { useContactStore } from '../../stores/ContactStore';
 
 export const ContactsIndexPage: FC = () => {
-  const { isEmpty, findAll, isFetched, isLoading, error } = useContactStore();
+  const { isEmpty, findAll, isFetched, isLoading, isError } = useContactStore();
 
   return (
     <>
-      <h2>Contacts List</h2>
+      <h2>Contact List</h2>
       {isLoading && <p>Loading...</p>}
-      {isFetched && isEmpty && <p>No Contacts Found</p>}
-      {isFetched && !isEmpty && (
-        <ul>
-          {findAll()?.map(contact => (
-            <li key={contact.id}>
-              <Link to={contact.id}>{contact.fullName}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      {isFetched && error && <p>Hooops...</p>}
+      {isFetched && isError && <p>Hooops...!</p>}
+      {isFetched && !isError && isEmpty && <p>No Contacts Found</p>}
+      {isFetched && !isError && !isEmpty && <ContactList contacts={findAll()} />}
     </>
   );
 };

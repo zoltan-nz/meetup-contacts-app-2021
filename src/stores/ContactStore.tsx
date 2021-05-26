@@ -9,7 +9,7 @@ import { Contact, ContactResponse } from '../models/contact';
 // ];
 
 interface ContactStore {
-  findAll: () => Contact[] | undefined;
+  findAll: () => Contact[];
   findRecord: (id: string) => Contact | undefined;
   addRecord: (contact: Contact) => Promise<AxiosResponse<Contact>>;
   isEmpty: boolean;
@@ -19,6 +19,7 @@ interface ContactStore {
   isAddRecordLoading: boolean;
   isAddRecordError: boolean;
   isAddRecordSuccess: boolean;
+  isError: boolean;
 }
 
 const ContactStoreContext = createContext<ContactStore | undefined>(undefined);
@@ -36,6 +37,7 @@ export const useContactStore = () => {
 export const ContactStoreProvider: FC = ({ children }) => {
   const {
     data: response,
+    isError,
     error,
     isLoading,
     isFetched,
@@ -49,7 +51,7 @@ export const ContactStoreProvider: FC = ({ children }) => {
   } = useMutation((contact: Contact) => axios.post('/api/contacts', { contact }));
 
   const contacts = response?.data.contacts;
-  const findAll = () => response?.data.contacts;
+  const findAll = () => response?.data.contacts || [];
   const findRecord = (id: string) => contacts?.find(c => c.id === id);
   const addRecord = (contact: Contact) => mutateAsync(contact);
 
@@ -61,6 +63,7 @@ export const ContactStoreProvider: FC = ({ children }) => {
         findAll,
         findRecord,
         addRecord,
+        isError,
         isEmpty,
         isLoading,
         isFetched,
