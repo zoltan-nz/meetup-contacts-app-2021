@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { createContext, FC, useContext } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Contact, ContactResponse } from '../models/contact';
 
 // const contacts: Contact[] = [
@@ -35,6 +35,7 @@ export const useContactStore = () => {
 };
 
 export const ContactStoreProvider: FC = ({ children }) => {
+  const queryClient = useQueryClient();
   const {
     data: response,
     isError,
@@ -49,7 +50,11 @@ export const ContactStoreProvider: FC = ({ children }) => {
     isLoading: isAddRecordLoading,
     isError: isAddRecordError,
     isSuccess: isAddRecordSuccess,
-  } = useMutation((contact: Contact) => axios.post('/api/contacts', { contact }));
+  } = useMutation((contact: Contact) => axios.post('/api/contacts', { contact }), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('contacts');
+    },
+  });
 
   const contacts = response?.data.contacts;
   const findAll = () => response?.data.contacts || [];
