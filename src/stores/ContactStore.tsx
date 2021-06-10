@@ -41,6 +41,7 @@ export const ContactStoreProvider: FC = ({ children }) => {
     error,
     isLoading,
     isFetched,
+    refetch,
   } = useQuery('contacts', () => axios.get<ContactResponse>('/api/contacts'));
 
   const {
@@ -53,7 +54,11 @@ export const ContactStoreProvider: FC = ({ children }) => {
   const contacts = response?.data.contacts;
   const findAll = () => response?.data.contacts || [];
   const findRecord = (id: string) => contacts?.find(c => c.id === id);
-  const addRecord = (contact: Contact) => mutateAsync(contact);
+  const addRecord = async (contact: Contact) => {
+    const nwcntct = await mutateAsync(contact);
+    refetch();
+    return nwcntct;
+  };
 
   const isEmpty = contacts?.length === 0;
 
