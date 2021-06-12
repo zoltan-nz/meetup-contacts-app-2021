@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { Button } from './Button';
 
-describe('./components/Button', () => {
+describe('Button', () => {
   it('should exists', async () => {
     const { findByTestId } = render(<Button label="something" />);
     expect(await findByTestId('custom-button')).toBeTruthy();

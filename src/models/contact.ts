@@ -10,7 +10,7 @@ export interface Contact {
   address?: Address;
 }
 
-export interface ContactResponse {
+export interface ContactsResponse {
   contacts: Contact[];
 }
 

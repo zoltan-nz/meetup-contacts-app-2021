@@ -35,8 +35,8 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test",
-    "test:check": "craco test --watchAll=false",
+    "test": "craco test --silent",
+    "test:check": "craco test --silent --watchAll=false",
     "format": "yarn format:check --write",
     "format:check": "prettier --list-different \"**/*.{ts,tsx,html,scss,css,js,json,md}\"",
     "verify": "run-p format:check test:check",

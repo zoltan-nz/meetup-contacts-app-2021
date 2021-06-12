@@ -1,25 +1,28 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { createContext, FC, useContext } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { Contact, ContactResponse } from '../models/contact';
+import { Contact, ContactsResponse } from '../models/contact';
 
-// const contacts: Contact[] = [
-//   { id: v4(), name: 'John Smith', phone: '1234-1234-1234', address: { city: 'Wellington', zip: 2016 } },
-//   { id: v4(), name: 'Paul Taylor', phone: '2345-3456' },
-// ];
+export const CONTACTS_API_URL = '/api/contacts/';
+
+const CONTACTS_QUERY_KEY = 'contacts';
 
 interface ContactStore {
   findAll: () => Contact[];
   findRecord: (id: string) => Contact | undefined;
-  addRecord: (contact: Contact) => Promise<AxiosResponse<Contact>>;
   isEmpty: boolean;
   isLoading: boolean;
   isFetched: boolean;
-  error?: unknown;
+  isError: boolean;
+  is500: boolean;
+  is400: boolean;
+  error: AxiosError | null;
+
+  addRecord: (contact: Contact) => Promise<AxiosResponse<Contact> | AxiosError>;
   isAddRecordLoading: boolean;
   isAddRecordError: boolean;
   isAddRecordSuccess: boolean;
-  isError: boolean;
+  addRecordError: AxiosError | null;
 }
 
 const ContactStoreContext = createContext<ContactStore | undefined>(undefined);
@@ -36,6 +39,7 @@ export const useContactStore = () => {
 
 export const ContactStoreProvider: FC = ({ children }) => {
   const queryClient = useQueryClient();
+
   const {
     data: response,
     isError,
@@ -43,29 +47,40 @@ export const ContactStoreProvider: FC = ({ children }) => {
     isLoading,
     isFetched,
     refetch,
-  } = useQuery('contacts', () => axios.get<ContactResponse>('/api/contacts'));
+  } = useQuery<AxiosResponse, AxiosError, AxiosResponse<ContactsResponse>>(
+    CONTACTS_QUERY_KEY,
+    async () => await axios.get(CONTACTS_API_URL)
+  );
 
   const {
     mutateAsync,
     isLoading: isAddRecordLoading,
     isError: isAddRecordError,
     isSuccess: isAddRecordSuccess,
-  } = useMutation((contact: Contact) => axios.post('/api/contacts', { contact }), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('contacts');
-    },
-  });
+    error: addRecordError,
+  } = useMutation<AxiosResponse, AxiosError, Contact>(
+    async (contact: Contact) => await axios.post(CONTACTS_API_URL, { contact }),
+    {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(CONTACTS_QUERY_KEY);
+      },
+    }
+  );
 
   const contacts = response?.data.contacts;
+  const isEmpty = contacts?.length === 0;
+
   const findAll = () => response?.data.contacts || [];
   const findRecord = (id: string) => contacts?.find(c => c.id === id);
+
   const addRecord = async (contact: Contact) => {
-    const nwcntct = await mutateAsync(contact);
-    refetch();
-    return nwcntct;
+    const newContact = await mutateAsync(contact);
+    await refetch();
+    return newContact;
   };
 
-  const isEmpty = contacts?.length === 0;
+  const is400 = error?.response?.status === 400;
+  const is500 = error?.response?.status === 500;
 
   return (
     <ContactStoreContext.Provider
@@ -81,6 +96,9 @@ export const ContactStoreProvider: FC = ({ children }) => {
         isAddRecordError,
         isAddRecordLoading,
         isAddRecordSuccess,
+        is500,
+        is400,
+        addRecordError,
       }}
     >
       {children}

@@ -5,7 +5,14 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
 import { ContactStoreProvider } from './stores/ContactStore';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 export const AppInitializers: FC = ({ children }) => (
   <StrictMode>

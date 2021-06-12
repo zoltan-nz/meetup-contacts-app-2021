@@ -5,22 +5,21 @@ import { Contact } from '../../models/contact';
 import { useContactStore } from '../../stores/ContactStore';
 
 export const NewContactPage: FC = () => {
-  const [newContact, setNewContact] = useState<Contact>({ id: v4(), fullName: '', phone: '' });
-  const { addRecord, isAddRecordLoading } = useContactStore();
   const navigate = useNavigate();
+
+  const [newContact, setNewContact] = useState<Contact>({ id: v4(), fullName: '', phone: '' });
+  const { addRecord, isAddRecordLoading, isAddRecordError, addRecordError } = useContactStore();
 
   const onSubmit: FormEventHandler = async (event: FormEvent) => {
     event.preventDefault();
 
-    addRecord(newContact).then(response => console.log(response));
-    navigate('../');
+    try {
+      await addRecord(newContact);
+      navigate('../');
+    } catch {
+      return;
+    }
   };
-
-  // useEffect(() => {
-  //     if (isAddRecordSuccess) {
-  //       navigate('../');
-  //     }
-  //   }, [isAddRecordSuccess, navigate]);
 
   return (
     <form onSubmit={onSubmit}>
@@ -34,6 +33,7 @@ export const NewContactPage: FC = () => {
       </label>
       <button type="submit">Add</button>
       {isAddRecordLoading && <div>Saving...</div>}
+      {isAddRecordError && <p style={{ color: 'red' }}>{addRecordError?.message}</p>}
     </form>
   );
 };
