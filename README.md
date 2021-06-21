@@ -1,4 +1,10 @@
-# Getting Started with Create React App
+# React in Structure Demo
+
+- [Presentation](https://docs.google.com/presentation/d/1jUyBWR5g-soG-78KO7yrjGaY1Pb1NCwFYv1un5OlD9U/edit?usp=sharing)
+- [Discord](https://discord.gg/Hc3ARubd)
+- [Typescript / React Workshop on Meetup](https://www.meetup.com/typescript-javascript-workshop)
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
