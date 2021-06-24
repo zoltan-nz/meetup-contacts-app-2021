@@ -38,6 +38,15 @@ export const NavigationBar: FC = () => {
             >
               Contacts
             </Link>
+            <Link
+              variant="button"
+              color="textPrimary"
+              component={NavLink}
+              to="/chat"
+              sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
+            >
+              Chat
+            </Link>
           </nav>
         </Toolbar>
       </Container>

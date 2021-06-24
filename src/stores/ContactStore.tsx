@@ -38,6 +38,8 @@ export const useContactStore = () => {
 };
 
 export const ContactStoreProvider: FC = ({ children }) => {
+  console.log('Contact Store Provider rendered');
+
   const queryClient = useQueryClient();
 
   const {

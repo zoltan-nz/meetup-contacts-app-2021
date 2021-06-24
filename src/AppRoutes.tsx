@@ -1,6 +1,8 @@
 import { useRoutes } from 'react-router-dom';
 import { AppIndexPage } from './pages/AppIndexPage';
 import { AppLayoutPage } from './pages/AppLayoutPage';
+import { ChatIndexPage } from './pages/chat/ChatIndexPage';
+import { ChatPage } from './pages/ChatPage';
 import { ContactPage } from './pages/contacts/ContactPage';
 import { ContactsIndexPage } from './pages/contacts/ContactsIndexPage';
 import { NewContactPage } from './pages/contacts/NewContactPage';
@@ -22,6 +24,11 @@ export const AppRoutes = () =>
             { path: '/:contactId', element: <ContactPage /> },
             { path: '/new', element: <NewContactPage /> },
           ],
+        },
+        {
+          path: '/chat',
+          element: <ChatPage />,
+          children: [{ path: '/', element: <ChatIndexPage /> }],
         },
       ],
     },
