@@ -18,20 +18,33 @@ interface Message {
   text: string;
 }
 
-const messagesDb = firebase.database().ref('messages');
-const pushMessage = (message: string) => messagesDb.push(message);
+interface User {
+  name: string;
+}
+
+interface ChatMessage {
+  id?: string;
+  user: User;
+  message: string;
+  time: Date | string;
+}
+
+const messagesDb = firebase.database().ref('messagesV2');
+const pushChatMessage = (message: ChatMessage) => messagesDb.push(message);
 
 export const ChatIndexPage = () => {
   const [newMessage, setNewMessage] = useState<string>('');
-  const [messageList, setMessageList] = useState<Message[]>([]);
+  const [messageList, setMessageList] = useState<ChatMessage[]>([]);
 
   const serializeMessageList = (snapshot: firebase.database.DataSnapshot) => {
-    const rawDbDataAsObject = snapshot.val();
-    const rawDbDataAsArray = Object.entries<string>(rawDbDataAsObject);
+    const rawDbDataAsObject = snapshot.val() ?? [];
+    const rawDbDataAsArray = Object.entries<ChatMessage>(rawDbDataAsObject);
 
-    const serializedList: Message[] = rawDbDataAsArray.map<Message>(([id, text]) => ({
+    const serializedList: ChatMessage[] = rawDbDataAsArray.map<ChatMessage>(([id, rawChatMessage]) => ({
       id,
-      text,
+      message: rawChatMessage.message,
+      user: rawChatMessage.user,
+      time: rawChatMessage.time,
     }));
 
     setMessageList(serializedList);
@@ -39,7 +52,7 @@ export const ChatIndexPage = () => {
 
   const submitMessage: FormEventHandler = event => {
     event.preventDefault();
-    pushMessage(newMessage);
+    pushChatMessage({ message: newMessage, time: new Date().toISOString(), user: { name: 'Alen' } });
     setNewMessage('');
   };
 
@@ -61,7 +74,7 @@ export const ChatIndexPage = () => {
       <ul>
         {messageList.map(message => (
           <li key={message.id}>
-            {message.id}: {message.text}
+            ({message.id}) {message.user.name} - {message.time}: {message.message}
           </li>
         ))}
       </ul>
