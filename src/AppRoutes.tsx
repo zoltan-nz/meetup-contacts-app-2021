@@ -7,6 +7,7 @@ import { ContactPage } from './pages/contacts/ContactPage';
 import { ContactsIndexPage } from './pages/contacts/ContactsIndexPage';
 import { NewContactPage } from './pages/contacts/NewContactPage';
 import { ContactsPage } from './pages/ContactsPage';
+import { ContactsWithReducer } from './pages/ContactsWithReducer';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export const AppRoutes = () =>
@@ -16,6 +17,7 @@ export const AppRoutes = () =>
       element: <AppLayoutPage />,
       children: [
         { path: '/', element: <AppIndexPage /> },
+        { path: '/contacts-with-reducer', element: <ContactsWithReducer /> },
         {
           path: '/contacts',
           element: <ContactsPage />,

@@ -47,6 +47,15 @@ export const NavigationBar: FC = () => {
             >
               Chat
             </Link>
+            <Link
+              variant="button"
+              color="textPrimary"
+              component={NavLink}
+              to="/contacts-with-reducer"
+              sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
+            >
+              Contacts With Reducer
+            </Link>
           </nav>
         </Toolbar>
       </Container>
