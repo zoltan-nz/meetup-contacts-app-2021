@@ -7,8 +7,6 @@ import { useRenderCounter } from '../hooks/use-render-counter';
 export const AppLayoutPage: FC = () => {
   const renderCounter = useRenderCounter();
 
-  console.log('render lifecycle');
-
   return (
     <>
       <div style={{ zIndex: 9 }}>{renderCounter}</div>

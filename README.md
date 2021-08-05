@@ -5,11 +5,18 @@
 - [Discord](https://discord.gg/Hc3ARubd)
 - [Typescript / React Workshop on Meetup](https://www.meetup.com/typescript-javascript-workshop)
 
-## Setup Firebase for the Chat Page
+## Setup FirebaseService for the Chat Page
 
 1. Copy `.env.sample` as `.env.local`.
 2. [Setup all values based on your Firebase config.](https://firebase.google.com/docs/web/setup?authuser=0&sdk_version=v8#config-object)
-3. Values will be imported by the Chat page.
+3. Values will be imported by the `./src/services/FirebaseService`.
+
+**Where can I find the Firebase config?**
+
+1. Navigate to <https://console.firebase.google.com>
+2. Create or open your Project.
+3. Find Project settings with clicking on the cog icon.
+4. Find "SDK setup and configuration" section and click on "Config"
 
 ## Craco
 
