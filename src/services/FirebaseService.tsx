@@ -5,10 +5,10 @@ import { createContext, FC, useContext, useMemo, useState } from 'react';
  * Firebase Service is for connecting to Firebase.
  */
 interface FirebaseService {
+  firebaseApp: firebase.app.App | undefined;
   isFirebaseConnected: boolean;
   connectFirebase: () => boolean;
   disconnectFirebase: () => void;
-  chatMessagesCollection: firebase.database.Reference | undefined;
 }
 
 /*
@@ -28,8 +28,6 @@ const FIREBASE_CONFIG = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-const CHAT_MESSAGES_DB = 'chat-messages';
-
 const FirebaseServiceContext = createContext<FirebaseService | undefined>(undefined);
 
 export const useFirebaseService = () => {
@@ -43,19 +41,13 @@ export const useFirebaseService = () => {
 };
 
 export const FirebaseServiceProvider: FC = ({ children }) => {
+  // Initialized Firebase connection will be added to the firebaseApp
   const [firebaseApp, setFirebaseApp] = useState<firebase.app.App | undefined>(undefined);
-  const [isFirebaseConnected, setFirebaseConnected] = useState<boolean>(false);
-  const [chatMessagesCollection, setChatMessagesCollection] = useState<firebase.database.Reference | undefined>(
-    undefined
-  );
+  const [isFirebaseConnected, setIsFirebaseConnected] = useState<boolean>(false);
 
   useMemo(() => {
-    setFirebaseConnected(firebaseApp !== undefined);
-  }, [firebaseApp, setFirebaseConnected]);
-
-  useMemo(() => {
-    setChatMessagesCollection(firebaseApp?.database().ref(CHAT_MESSAGES_DB));
-  }, [firebaseApp]);
+    setIsFirebaseConnected(firebaseApp !== undefined);
+  }, [firebaseApp, setIsFirebaseConnected]);
 
   const connectFirebase = () => {
     if (!FIREBASE_CONFIG.databaseURL) {
@@ -75,10 +67,10 @@ export const FirebaseServiceProvider: FC = ({ children }) => {
   return (
     <FirebaseServiceContext.Provider
       value={{
+        firebaseApp,
         isFirebaseConnected,
         connectFirebase,
         disconnectFirebase,
-        chatMessagesCollection,
       }}
     >
       {children}

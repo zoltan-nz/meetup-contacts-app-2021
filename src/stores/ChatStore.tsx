@@ -3,6 +3,8 @@ import { createContext, FC, useContext, useMemo, useState } from 'react';
 import { ChatMessage } from '../models/chat-message';
 import { useFirebaseService } from '../services/FirebaseService';
 
+const CHAT_MESSAGES_DB = 'chat-messages';
+
 /**
  * Chat Store demonstrates the usage of Firebase realtime data store.
  * Firebase connection is managed in FirebaseService, check it out.
@@ -25,9 +27,16 @@ export const useChatStore = () => {
 };
 
 export const ChatStoreProvider: FC = ({ children }) => {
-  const { chatMessagesCollection } = useFirebaseService();
+  const { firebaseApp } = useFirebaseService();
 
+  const [chatMessagesCollection, setChatMessagesCollection] = useState<firebase.database.Reference | undefined>(
+    undefined
+  );
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+
+  useMemo(() => {
+    setChatMessagesCollection(firebaseApp?.database().ref(CHAT_MESSAGES_DB));
+  }, [firebaseApp]);
 
   const serializeMessageList = (snapshot: firebase.database.DataSnapshot) => {
     const rawDbDataAsObject = snapshot.val() ?? [];
