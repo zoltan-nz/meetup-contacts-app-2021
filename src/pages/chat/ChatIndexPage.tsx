@@ -4,10 +4,11 @@ import { useFirebaseService } from '../../services/FirebaseService';
 import { useChatStore } from '../../stores/ChatStore';
 
 export const ChatIndexPage = () => {
-  const { isFirebaseConnected, connectFirebase, disconnectFirebase } = useFirebaseService();
-  const { chatMessages, saveChatMessage } = useChatStore();
-  const [newMessage, setNewMessage] = useState('');
+  const { firebaseApp, isFirebaseConnected, connectFirebase, disconnectFirebase } = useFirebaseService();
   const [toggleFirebase, setToggleFirebase] = useState(false);
+
+  const [newMessage, setNewMessage] = useState('');
+  const { chatMessages, saveChatMessage } = useChatStore();
 
   const sendMessage: FormEventHandler = event => {
     event.preventDefault();
@@ -37,7 +38,7 @@ export const ChatIndexPage = () => {
         </Box>
       )}
 
-      {isFirebaseConnected && (
+      {isFirebaseConnected && firebaseApp?.auth().currentUser && (
         <>
           <form onSubmit={sendMessage}>
             <input type="text" value={newMessage} onChange={event => setNewMessage(event.target.value)} />

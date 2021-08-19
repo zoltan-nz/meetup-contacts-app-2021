@@ -56,6 +56,24 @@ export const NavigationBar: FC = () => {
             >
               Contacts With Reducer
             </Link>
+            <Link
+              variant="button"
+              color="textPrimary"
+              component={NavLink}
+              to="/auth/sign-up"
+              sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
+            >
+              Sign Up
+            </Link>
+            <Link
+              variant="button"
+              color="textPrimary"
+              component={NavLink}
+              to="/auth/login"
+              sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
+            >
+              Login
+            </Link>
           </nav>
         </Toolbar>
       </Container>

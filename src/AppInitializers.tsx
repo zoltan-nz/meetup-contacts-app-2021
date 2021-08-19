@@ -3,6 +3,7 @@ import { FC, StrictMode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
+import { FirebaseServiceProvider } from './services/FirebaseService';
 import { ContactStoreProvider } from './stores/ContactStore';
 
 const queryClient = new QueryClient({
@@ -19,7 +20,9 @@ export const AppInitializers: FC = ({ children }) => (
     <CssBaseline />
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <ContactStoreProvider>{children}</ContactStoreProvider>
+        <ContactStoreProvider>
+          <FirebaseServiceProvider>{children}</FirebaseServiceProvider>
+        </ContactStoreProvider>
         <ReactQueryDevtools initialIsOpen={true} />
       </QueryClientProvider>
     </BrowserRouter>

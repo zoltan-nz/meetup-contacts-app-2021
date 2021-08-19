@@ -1,6 +1,9 @@
 import { useRoutes } from 'react-router-dom';
 import { AppIndexPage } from './pages/AppIndexPage';
 import { AppLayoutPage } from './pages/AppLayoutPage';
+import { LoginPage } from './pages/auth/LoginPage';
+import { SignUpPage } from './pages/auth/SignUpPage';
+import { AuthPage } from './pages/AuthPage';
 import { ChatIndexPage } from './pages/chat/ChatIndexPage';
 import { ChatPage } from './pages/ChatPage';
 import { ContactPage } from './pages/contacts/ContactPage';
@@ -31,6 +34,14 @@ export const AppRoutes = () =>
           path: '/chat',
           element: <ChatPage />,
           children: [{ path: '/', element: <ChatIndexPage /> }],
+        },
+        {
+          path: '/auth',
+          element: <AuthPage />,
+          children: [
+            { path: '/login', element: <LoginPage /> },
+            { path: '/sign-up', element: <SignUpPage /> },
+          ],
         },
       ],
     },
