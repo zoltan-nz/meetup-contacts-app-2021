@@ -16,7 +16,9 @@ export const LoginPage: FC = () => {
       console.log(userCredential);
     } catch (error) {
       console.error(error);
-      setErrorMessage(error.message);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      }
     }
   };
 

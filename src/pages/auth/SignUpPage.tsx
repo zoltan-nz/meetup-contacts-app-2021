@@ -9,6 +9,8 @@ export const SignUpPage: FC = () => {
   const onSubmit: FormEventHandler = async (event: FormEvent) => {
     event.preventDefault();
 
+    setErrorMessage('');
+
     if (!newUser.email || !newUser.password) return;
 
     try {
@@ -16,7 +18,9 @@ export const SignUpPage: FC = () => {
       console.log(userCredential);
     } catch (error) {
       console.error(error);
-      setErrorMessage(error.message);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      }
     }
   };
 

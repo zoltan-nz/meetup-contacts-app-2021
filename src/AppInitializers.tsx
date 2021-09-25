@@ -23,7 +23,7 @@ export const AppInitializers: FC = ({ children }) => (
         <ContactStoreProvider>
           <FirebaseServiceProvider>{children}</FirebaseServiceProvider>
         </ContactStoreProvider>
-        <ReactQueryDevtools initialIsOpen={true} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>

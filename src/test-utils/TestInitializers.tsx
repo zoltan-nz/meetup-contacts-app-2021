@@ -1,9 +1,14 @@
 import { render, RenderOptions } from '@testing-library/react';
+import { InitialEntry } from 'history';
 import { FC, ReactElement } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 
-export const TestInitializers: FC = ({ children }) => {
+export interface TestInitializersParams {
+  initialEntries?: InitialEntry[] | undefined;
+}
+
+export const TestInitializers: FC<TestInitializersParams> = ({ children, initialEntries }) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -13,7 +18,7 @@ export const TestInitializers: FC = ({ children }) => {
   });
 
   return (
-    <MemoryRouter>
+    <MemoryRouter initialEntries={initialEntries}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </MemoryRouter>
   );

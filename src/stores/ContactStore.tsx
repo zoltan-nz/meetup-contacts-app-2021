@@ -9,7 +9,7 @@ const CONTACTS_QUERY_KEY = 'contacts';
 
 interface ContactStore {
   findAll: () => Contact[];
-  findRecord: (id: string) => Contact | undefined;
+  findRecord: (id: string | undefined) => Contact | undefined;
   isEmpty: boolean;
   isLoading: boolean;
   isFetched: boolean;
@@ -71,7 +71,7 @@ export const ContactStoreProvider: FC = ({ children }) => {
   const isEmpty = contacts?.length === 0;
 
   const findAll = () => response?.data.contacts || [];
-  const findRecord = (id: string) => contacts?.find(c => c.id === id);
+  const findRecord = (id: string | undefined) => contacts?.find(c => c.id === id);
 
   const addRecord = async (contact: Contact) => {
     const newContact = await mutateAsync(contact);
