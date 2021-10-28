@@ -1,4 +1,5 @@
 import { useRoutes } from 'react-router-dom';
+import { AdvanceContactsPage } from './pages/AdvanceContactsPage';
 import { AppIndexPage } from './pages/AppIndexPage';
 import { AppLayoutPage } from './pages/AppLayoutPage';
 import { LoginPage } from './pages/auth/LoginPage';
@@ -13,6 +14,13 @@ import { ContactsPage } from './pages/ContactsPage';
 import { ContactsWithReducer } from './pages/ContactsWithReducer';
 import { NotFoundPage } from './pages/NotFoundPage';
 
+export const ROUTES = {
+  advanceContacts: 'advance-contacts',
+  contactsWithReducer: 'contacts-with-reducer',
+  auth: 'auth',
+  login: 'login',
+};
+
 export const AppRoutes = () =>
   useRoutes([
     {
@@ -21,6 +29,7 @@ export const AppRoutes = () =>
       children: [
         { index: true, element: <AppIndexPage /> },
         { path: 'contacts-with-reducer', element: <ContactsWithReducer /> },
+        { path: ROUTES.advanceContacts, element: <AdvanceContactsPage /> },
         {
           path: 'contacts',
           element: <ContactsPage />,

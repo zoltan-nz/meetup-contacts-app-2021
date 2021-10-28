@@ -1,6 +1,7 @@
 import { AppBar, Container, Link, Toolbar, Typography, useTheme } from '@material-ui/core';
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
+import { ROUTES } from '../AppRoutes';
 
 export const NavigationBar: FC = () => {
   const theme = useTheme();
@@ -60,6 +61,15 @@ export const NavigationBar: FC = () => {
               variant="button"
               color="textPrimary"
               component={NavLink}
+              to={ROUTES.advanceContacts}
+              sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
+            >
+              Advance contacts
+            </Link>
+            <Link
+              variant="button"
+              color="textPrimary"
+              component={NavLink}
               to="/auth/sign-up"
               sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
             >
@@ -69,7 +79,7 @@ export const NavigationBar: FC = () => {
               variant="button"
               color="textPrimary"
               component={NavLink}
-              to="/auth/login"
+              to={`${ROUTES.auth}/${ROUTES.login}`}
               sx={{ margin: theme.spacing(1, 1.5), flexGrow: 1 }}
             >
               Login

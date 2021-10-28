@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
 import { FirebaseServiceProvider } from './services/FirebaseService';
+import { AdvanceContactStoreProvider } from './stores/AdvanceContactStore';
 import { ContactStoreProvider } from './stores/ContactStore';
 
 const queryClient = new QueryClient({
@@ -21,7 +22,9 @@ export const AppInitializers: FC = ({ children }) => (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ContactStoreProvider>
-          <FirebaseServiceProvider>{children}</FirebaseServiceProvider>
+          <AdvanceContactStoreProvider>
+            <FirebaseServiceProvider>{children}</FirebaseServiceProvider>
+          </AdvanceContactStoreProvider>
         </ContactStoreProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
